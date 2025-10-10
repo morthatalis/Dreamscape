@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Games - Dreamscape</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="styles.css">
+<link rel="shortcut icon" href="/img/icon.ico">
+<script src="https://js.puter.com/v2/"></script> <!--to bypass CORS, without having to care about hosting my own server for CORS bypassing-->
+</head>
+<body>
+
+    <div class="container-fluid" style="position: fixed; top: 0px; left: 0; width: 100%;">
+        <div id="toppad">
+        <button onclick="ToggleNav()" style="background-color: transparent; border: none;" class="navbtn"><img src="img/hamburger.png" width="25" height="25"></button>
+        <a href="index.html">
+                <img src="img/icon.ico" width="30" height="30">
+             </a>
+        </div>
+        <div class="nav rbx-navbar hidden-xs hidden-sm col-md-4 col-lg-3">
+            <padding></padding>
+            <padding></padding>
+            <li>
+                <a href="games.html">Games</a>
+            </li>
+            <!--<li> 
+                <a href="catalog.html">Catalog</a>
+            </li> -->
+            
+        </div>
+        <div class="rbx-navbar-header">
+            <div data-behavior="nav-notification" class="rbx-nav-collapse" onselectstart="return false;">
+                <div class="rbx-nav-notification hide rbx-font-xs" title="0"></div>
+            </div>
+            <div class="navbar-header">
+                <a class="navbar-brand" href="index.html"><span class="logo"></span></a>
+            </div>
+              <div>
+                 <input class="form-control rbx-input-field" type="text" placeholder="Search" style="width: 200px;" maxlength="120">
+                    <button type="button" class="rbx-input-group-btn" style="background-image: url(img/search_icon.png); background-repeat: no-repeat; height: 25px; transform: translate(-35px, 2.5px); border: hidden;"></button>
+    </div>
+    
+</div>
+</div>
+<div style="margin-left: 40px; " id="mainpage">
+    <padding></padding>
+    <h1 id="hometext">Games</h1>
+    <h2 id="hometext">Popular</h2>
+    <div class="block" id="popular" style="scrollbar-color: transparent; width: calc(100% - 250px); color: white; overflow-x: auto;">
+        
+    </div>
+    <h2 id="hometext">Trending</h2>
+    <div class="block" id="trending" style="scrollbar-color: transparent; width: calc(100% - 250px); color: white; overflow-x: auto;">
+        
+    </div>
+</div>
+<div id="nav" style="display: none; z-index: 1000; position: fixed; top: 40px; left: 0;">
+        <nav>
+            <a href="/">
+            <button class="navbarbtn">Home</button>
+            </a>
+            <textarea class="navbarbtn" style="padding: 3px; width: 96%; resize: none;" id="userid" placeholder="put your roblox userid here"></textarea>
+            <button class="navbarbtn" onclick="saveid()">Save userid</button>
+        </nav>
+    </div>
+    <script type="text/javascript" src="main.js"></script>
+    <script>
+        let trending = document.getElementById('trending');
+        let popular = document.getElementById('popular');
+        //let topearning = document.getElementById('topearning');
+        popular.innerHTML = sessionStorage.getItem("popularhtml");
+        //topearning.innerHTML = sessionStorage.getItem("topearninghtml");
+        /*<div class="gameblock">
+            <img src="image" width="80px" height="80px">
+            <h4>name</h4>
+        </div>*/
+        trending.innerHTML = sessionStorage.getItem("trendinghtml")
+        puter.net.fetch("https://apis.roblox.com/explore-api/v1/get-sort-content?sessionId=your-generated-uuid&sortId=top-trending")
+  .then(response => response.json())
+  .then(async data => {
+    if (data.games && Array.isArray(data.games)) {
+        let change = true
+      const limit = 30;
+      const gamesToShow = data.games.slice(0, limit);
+
+      const thumbnails = await Promise.all(
+        gamesToShow.map(game =>
+          puter.net.fetch(`https://thumbnails.roblox.com/v1/places/gameicons?placeIds=${game.rootPlaceId}&size=512x512&format=Png&isCircular=false`)
+            .then(res => res.json())
+            .then(iconData => iconData.data[0]?.imageUrl || "/img/icon.ico") // fallback if missing
+            .catch(() => {console.log("no fallback for error but use cached"); change == false}) // fallback if error
+        )
+      );
+      if (change == true) {
+      const html = gamesToShow.map((game, i) => `
+        <a href="game?placeid=${game.rootPlaceId}">
+          <div class="gameblock">
+            <img src="${thumbnails[i]}" width="80px" height="80px">
+            <p>${game.name}</p>
+          </div>
+        </a>
+      `).join('');
+
+      // Set innerHTML once
+      trending.innerHTML = html;
+      sessionStorage.setItem("trendinghtml", html);
+      //observeThumbnails(trending);
+  }
+      puter.net.fetch("https://apis.roblox.com/explore-api/v1/get-sort-content?sessionId=your-generated-uuid&sortId=top-playing-now")
+  .then(response => response.json())
+  .then(async data => {
+    if (data.games && Array.isArray(data.games)) {
+        let a = true
+      const limit = 30;
+      const gamesToShow = data.games.slice(0, limit);
+
+      const thumbnails = await Promise.all(
+        gamesToShow.map(game =>
+          puter.net.fetch(`https://thumbnails.roblox.com/v1/places/gameicons?placeIds=${game.rootPlaceId}&size=512x512&format=Png&isCircular=false`)
+            .then(res => res.json())
+            .then(iconData => iconData.data[0]?.imageUrl || "/img/icon.ico") // fallback if missing
+            .catch(() => { console.log("fallback because error"); a = false;}) // fallback if error
+        )
+      );
+      if (a == true) {
+      const html = gamesToShow.map((game, i) => `
+        <a href="game?placeid=${game.rootPlaceId}">
+          <div class="gameblock">
+            <img src="${thumbnails[i]}" width="80px" height="80px">
+            <p>${game.name}</p>
+          </div>
+        </a>
+      `).join('');
+
+      // Set innerHTML once
+      popular.innerHTML = html;
+      sessionStorage.setItem("popularhtml", html);
+      //observeThumbnails(popular);
+      }
+      
+    }
+
+  })
+  .catch(err => console.error("Error loading popular games:", err));
+    }
+
+  })
+  .catch(err => console.error("Error loading popular games:", err));
+      </script>
+</body>
+</html>
+

@@ -1,0 +1,151 @@
+        h1, h2, h3, h4, h5, p, li {color: white;}
+        body {
+            background-color:   #360f5a;
+            font-family: "Source Sans 3";
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container-fluid {
+            background-color:#522081;
+            padding: 5px 10px;
+            display: flex;
+            align-items: center;
+            height: 30px; /* Half the size */
+            z-index: 1;
+        }
+        
+        .rbx-navbar-header {
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+        }
+        
+        .rbx-navbar-header .navbar-brand {
+            display: inline-block;
+            width: 100px;
+        }
+        
+        .rbx-navbar-header .navbar-brand .logo {
+            display: block;
+            width: 100%;
+            height: auto;
+            background: url('icon.ico') no-repeat center center;
+            background-size: contain;
+        }
+
+        .nav {
+
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            margin-left: auto; /* Align to the left */
+        }
+        
+        .nav li {
+            margin-right: 10px;
+        }
+        
+        .nav li:last-child {
+            margin-right: 0;
+        }
+        
+        .nav a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+
+        }
+        
+        .nav a:hover {
+            text-decoration: underline;
+        }
+        
+        .rbx-input-field {
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            padding: 6px 10px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        .rbx-input-group-btn {
+            background-color: #fff;
+            color: #0085D1;
+            border: 1px solid #0085D1;
+            border-radius: 3px;
+            padding: 6px 12px;
+            cursor: pointer;
+        }
+        
+        .rbx-input-group-btn:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .navbar-left {
+                align-items: center;
+               display: flex;
+
+        }
+        nav {
+            width: 200px;
+            height: calc(100vh - 40px);
+            background-color: #522081 !important;
+        }
+
+        padding {
+            padding: 2px;
+        }
+        .navbtn:hover {
+            cursor: pointer;
+        }
+        #toppad {
+            padding-top: 2px;
+        }
+        .navbarbtn {
+            background-color: #6a329f;
+            color: #fff;
+            padding: 10px;
+            border-color: #360f5a;
+            width: 200px;
+            cursor: pointer;
+            border-radius: 0;
+            text-align: left;
+        }
+        .ui-container {
+            transform: translate(-430px, 100px);
+            z-index: 1;
+        }
+        .block {
+            background-color:  transparent;
+            width: 200px;
+            padding: 10px;
+            display: inline-flex;
+        }
+        html, body {
+        overflow-x: hidden;
+        overflow-y: auto;
+        }
+.gameblock {
+  background: #1f033f;
+  width: 100px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  /*display: flex;*/
+  flex-direction: column;
+  gap: 20px;
+}
+
+.gamefrontimg {
+  display: block; 
+  margin-bottom: 5px;
+}
+
+.gameblock h4 {
+  margin: 0;
+  font-size: 14px;
+}
