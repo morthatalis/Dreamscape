@@ -8,93 +8,75 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="styles.css">
-<link rel="shortcut icon" href="/img/icon.ico">
+<link rel="shortcut icon" href="img/icon.ico">
 <script src="https://js.puter.com/v2/"></script> <!--to bypass CORS, without having to care about hosting my own server for CORS bypassing-->
+
 </head>
 <body>
-
-    <div class="container-fluid" style="position: fixed; top: 0px; left: 0; width: 100%;">
-        <div id="toppad">
-        <button onclick="ToggleNav()" style="background-color: transparent; border: none;" class="navbtn"><img src="img/hamburger.png" width="25" height="25"></button>
-        <a href="index.html">
-                <img src="img/icon.ico" width="30" height="30">
-             </a>
-        </div>
-        <div class="nav rbx-navbar hidden-xs hidden-sm col-md-4 col-lg-3">
-            <padding></padding>
-            <padding></padding>
-            <li>
-                <a href="games.html">Games</a>
-            </li>
-            <!--<li> 
-                <a href="catalog.html">Catalog</a>
-            </li> -->
-            
-        </div>
-        <div class="rbx-navbar-header">
-            <div data-behavior="nav-notification" class="rbx-nav-collapse" onselectstart="return false;">
-                <div class="rbx-nav-notification hide rbx-font-xs" title="0"></div>
-            </div>
-            <div class="navbar-header">
-                <a class="navbar-brand" href="index.html"><span class="logo"></span></a>
-            </div>
-              <div>
-                 <input class="form-control rbx-input-field" type="text" placeholder="Search" style="width: 200px;" maxlength="120">
-                    <button type="button" class="rbx-input-group-btn" style="background-image: url(img/search_icon.png); background-repeat: no-repeat; height: 25px; transform: translate(-35px, 2.5px); border: hidden;"></button>
-    </div>
-    
-</div>
-</div>
+<script type="text/javascript" src="stdinc.js"></script>
 <div style="padding-right: 30px; padding-top: 50px; display: flex; justify-content: center;align-items: center; flex-direction: column;" id="mainpage">
-    <div style="width: 750px; height: 250px; background-color: #1f033f;">
+    <div style="width: 675px; height: 250px; background-color: #1f033f;">
     
     
         <div style="background-color:#1f033f; padding: 10px; display:flex;" width="1250px" id="gamepagecore">
-            <img src="/img/icon.ico" style="width: calc(50%); " id="gamecoreimage">
+            <img src="/img/icon.ico" style="width: calc(60%); " id="gamecoreimage">
             <div style="display:align-items; margin-left: 40px;">
             <h3  id="gamecorename">Name</h3>
-            <button onclick="joinplace()" style="width: 200px !important; height: 50px; font-size: 16px; text-align: center; !important; padding: 0px !important; margin-top: 60px;" class="navbarbtn"><p style="color: black;">Play</p></button>
+            <button onclick="joinplace()" style="width: 200px !important; height: 50px; font-size: 16px; text-align: center; !important; padding: 0px !important; margin-top: 60px; background-color: #00bf5a !important;border-color: #00bf5a;" class="navbarbtn"><p style="color: white;">Play</p></button>
             </div>
 
         </div>
 
     </div>
-    <div style="width: 650px; height: 250px; background-color: #360f5a; margin-top: 10px; ">
+    <div style="width: 650px; height: flex; background-color: #360f5a; margin-top: 10px; ">
         <h2 id="desctag">Description</h2>
+        <div style="background-color: #1f033f; margin-top: 5px; padding: 10px;">
         <p id="gamecoredescription"></p>
+        </div>
+        <div style="margin-top: 10px; background-color: #1f033f;">
+        <p id="playingptag" style=" padding: 10px; padding-left:5px;">as</p>
+        </div>
     </div>
     
 </div>
-<div id="nav" style="display: none; z-index: 1000; position: fixed; top: 40px; left: 0;">
-        <nav>
-            <a href="/">
-            <button class="navbarbtn">Home</button>
-            </a>
-            <textarea class="navbarbtn" style="padding: 3px; width: 96%; resize: none;" id="userid" placeholder="put your roblox userid here"></textarea>
-            <button class="navbarbtn" onclick="saveid()">Save userid</button>
-        </nav>
-    </div>
     <script type="text/javascript" src="main.js"></script>
     <script> 
+
+        function shrinknumber(num, decimals = 2) {
+  if (num === null || num === undefined) return '0';
+  const suffixes = ['', 'K', 'M', 'B', 'T'];
+  const absNum = Math.abs(num);
+  let tier = 0;
+
+  while (absNum >= 1000 ** (tier + 1) && tier < suffixes.length - 1) {
+    tier++;
+  }
+
+  const scaled = num / 1000 ** tier;
+  const rounded = scaled.toFixed(decimals);
+  return `${rounded.replace(/\.0+$/, '')}${suffixes[tier]}`;
+}
         //vars//
         const urlParams = new URLSearchParams(window.location.search); 
         const placeid = urlParams.get("placeid");
-        let cachedname = sessionStorage.getItem("gamecorename");
+        var cachedname = "";
         const cacheddescription = sessionStorage.getItem("gamecoredescription");
         const namestring = document.getElementById("gamecorename");
         const image = document.getElementById("gamecoreimage");
         const description = document.getElementById("gamecoredescription");
         const desctag = document.getElementById("desctag");
         const windowtitle = document.getElementById("windowtitle");
-        const played = localStorage.getItem("playedgames");
+        const playingtag = document.getElementById("playingptag");
         let universeid = sessionStorage.getItem("universeid");
+        let c
         //init//
         if (cachedname && cacheddescription) {
             windowtitle.innerHTML = cachedname  + " - Dreamscape";
             namestring.innerHTML = "(Cached) " + cachedname;
             description.innerHTML = cacheddescription;
-            desctag.innerHTML = "(Cached) Description"
-            image.src = sessionStorage.getItem("thumbnailurl")
+            desctag.innerHTML = "(Cached) Description";
+            image.src = sessionStorage.getItem("thumbnailurl");
+            cachedname = sessionStorage.getItem("gamecorename");
         }
         //init fetch page//
         puter.net.fetch(`https://apis.roblox.com/universes/v1/places/${placeid}/universe`)
@@ -103,24 +85,24 @@
             universeid = data.universeId;
             sessionStorage.setItem("universeid", data[0]);
             console.log(data.universeId);
-        
-        
-        puter.net.fetch(`https://economy.roblox.com/v2/assets/${placeid}/details`)
+        puter.net.fetch(`https://games.roblox.com/v1/games?universeIds=${universeid}`)
         .then(response => response.json())
         .then(data => {
-            const game = Array.isArray(data) ? data[0] : data;
-            console.log(game);
-            console.log("a");
+            //const getParent = data => Array.isArray(data.data) ? data.data[0] : data;
+            const game = Array.isArray(data.data) ? data.data[0] : data;
+            console.log(game );
+            console.log(game.name);
         if (game) {
             //localStorage.setItem("tempid", game);
-            if (game.Name) {
-                windowtitle.innerHTML = game.Name + " - Dreamscape";
+            if (game.name) {
+                windowtitle.innerHTML = game.name + " - Dreamscape";
                 desctag.innerHTML = "Description"
-                namestring.innerHTML = game.Name;
-                description.innerHTML = game.Description;
-            sessionStorage.setItem("gamecorename", game.Name);
-            sessionStorage.setItem("gamecoredescription", game.Description);
-            cachedname = game.Name;
+                namestring.innerHTML = game.name;
+                description.innerHTML = game.description;
+                cachedname = game.name;
+            sessionStorage.setItem("gamecorename", game.name);
+            sessionStorage.setItem("gamecoredescription", game.description);
+            playingtag.innerHTML = "Playing: " + shrinknumber(game.playing) + " Visits: " + shrinknumber(game.visits) + " Favorited: " + shrinknumber(game.favoritedCount)
             }
             puter.net.fetch(`https://thumbnails.roblox.com/v1/games/multiget/thumbnails?universeIds=${universeid}&size=480x270&format=Png&isCircular=false`)
         .then(response => response.json())
@@ -148,23 +130,33 @@
 
         //urlParams.get("placeid=")
         function joinplace() {
-            
+           console.log(cachedname);
 
 puter.net.fetch(`https://thumbnails.roblox.com/v1/places/gameicons?placeIds=${placeid}&size=512x512&format=Png&isCircular=false`)
   .then(res => res.json())
   .then(thumbnailData => {
-    // Generate HTML for all games
-      const thumb = thumbnailData.data[0]?.imageUrl || "/img/icon.ico";
-      const b = localStorage.getItem("playedgames");
-      localStorage.setItem("playedgames", `
-        <a href="game?placeid=${placeid}">
-          <div class="gameblock">
-            <img src="${thumb}" width="80px" height="80px">
-            <p>${cachedname}</p>
-          </div>
-        </a>
-      ` + b);
-  })
+  const thumb = thumbnailData?.data?.[0]?.imageUrl || "/img/icon.ico";
+  const b = localStorage.getItem("playedgames") || "";
+  const array = b.split("<!---->");
+  const filteredarray = [];
+
+  array.forEach((item, index) => {
+    if (!item.includes(placeid) && index < 10) {
+      filteredarray.unshift(item);
+    }
+  });
+
+  filteredarray.unshift(`
+<a href="game.html?placeid=${placeid}">
+  <div class="gameblock">
+    <img src="${thumb}" width="150px" height="150px">
+    <p>${cachedname}</p>
+  </div>
+</a>`);
+
+  localStorage.setItem("playedgames", filteredarray.join("\n<!---->"));
+})
+
   
   .catch(err => console.error("Error fetching thumbnails:", err));
 

@@ -30,7 +30,7 @@
             display: block;
             width: 100%;
             height: auto;
-            background: url('icon.ico') no-repeat center center;
+            /*background: url('icon.ico') no-repeat center center;*/
             background-size: contain;
         }
 
@@ -122,6 +122,7 @@
             width: 200px;
             padding: 10px;
             display: inline-flex;
+            gap: 10px;
         }
         html, body {
         overflow-x: hidden;
@@ -129,15 +130,36 @@
         }
 .gameblock {
   background: #1f033f;
-  width: 100px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 10px;
+  width: 150px;
   box-sizing: border-box;
-  border-radius: 5px;
-  /*display: flex;*/
+  display: flex;
   flex-direction: column;
-  gap: 20px;
+  align-items: left;
+  height: 220px;
+  border-radius: 5px;
+}
+
+.gameblock img {
+  width: 150px;
+  height: 150px;
+  border-radius: 5px;
+  object-fit: cover;
+}
+
+/* This is the part that truncates the text properly */
+.gameblock p {
+  width: 100%;
+  margin: 0;
+  right: 10px;         /* <- your 5px buffer */
+  padding-left: 5px;
+  padding-top: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+  width: 95%;
+  color: white;               /* optional */
+  font-size: 16px;            /* optional */
 }
 
 .gamefrontimg {
@@ -148,4 +170,21 @@
 .gameblock h4 {
   margin: 0;
   font-size: 14px;
+}
+#grid-container {
+  display: grid;                            /* make it a grid */
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); /* responsive columns */
+  gap: 5px;                                /* space between grid items */
+  padding: 10px;
+  width: calc(100% - 250px);
+  color: white;
+  background-color: transparent;
+  overflow-x: auto;
+  scrollbar-color: transparent transparent; /* hides scrollbar color */
+}
+.block2 {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
 }

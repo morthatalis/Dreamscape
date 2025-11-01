@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title id="windowtitle">Search - Dreamscape</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="styles.css">
+<link rel="shortcut icon" href="img/icon.ico">
+<script src="https://js.puter.com/v2/"></script> <!--to bypass CORS, without having to care about hosting my own server for CORS bypassing-->
+
+</head>
+<body>
+
+<div style="padding-left: 50px;" id="mainpage">
+	<h1>Search</h1>
+    <div class="block2" id="grid-container" style="scrollbar-color: transparent; width: calc(100% - 250px); color: white; overflow-x: auto; height: flex; display: grid;">
+  </div>
+<script type="text/javascript" src="stdinc.js"></script>
+<script type="text/javascript" src="main.js"></script>
+<script>
+	const urlParams = new URLSearchParams(window.location.search); 
+    const query = urlParams.get("q");
+    const searchtype = urlParams.get("type");
+    const grid = document.getElementById("grid-container");
+    if (searchtype == "games") {
+puter.net.fetch(`https://apis.roblox.com/search-api/omni-search?searchQuery=${query}&sessionId=SESSION_ID`)
+  .then(response => response.json())
+  .then(async data => {
+    if (data.searchResults && Array.isArray(data.searchResults)) {
+        let a = true
+      const limit = 20;
+      const gamesToShow = data.searchResults.slice(0, limit);
+
+      const thumbnails = await Promise.all(
+        gamesToShow.map(game =>
+          puter.net.fetch(`https://thumbnails.roblox.com/v1/places/gameicons?placeIds=${game.contents[0].rootPlaceId}&size=512x512&format=Png&isCircular=false`)
+            .then(res => res.json())
+            .then(iconData => iconData.data[0]?.imageUrl || "/img/icon.ico") // fallback if missing
+            .catch(() => { console.log("fallback because error"); a = false;}) // fallback if error
+        )
+      );
+      const html = gamesToShow.map((game, i) => `
+        <a href="game.html?placeid=${game.contents[0].rootPlaceId}">
+          <div class="gameblock">
+            <img src="${thumbnails[i]}" width="80px" height="80px">
+            <p>${game.contents[0].name}</p>
+          </div>
+        </a>
+      `).join('');
+      console.log(html);
+      // Set innerHTML once
+      grid.innerHTML = html;
+      
+    }
+
+  })
+  .catch(err => console.error("Error loading popular games:", err));
+}
+</script>
+</body>
+</html>

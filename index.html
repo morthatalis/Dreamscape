@@ -8,43 +8,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="styles.css">
-<link rel="shortcut icon" href="/img/icon.ico">
+<link rel="shortcut icon" href="img/icon.ico">
 <script src="https://js.puter.com/v2/"></script> <!--to bypass CORS, without having to care about hosting my own server for CORS bypassing. might be slower tho idk-->
-</head>
-<body>
 
-    <div class="container-fluid">
-        <div id="toppad">
-        <button onclick="ToggleNav()" style="background-color: transparent; border: none;" class="navbtn"><img src="img/hamburger.png" width="25" height="25"></button>
-        <a href="index.html">
-                <img src="img/icon.ico" width="30" height="30">
-             </a>
-        </div>
-        <div class="nav rbx-navbar hidden-xs hidden-sm col-md-4 col-lg-3">
-            <padding></padding>
-            <padding></padding>
-            <li>
-                <a href="games.html">Games</a>
-            </li>
-            <!--<li> 
-                <a href="catalog.html">Catalog</a>
-            </li> -->
-            
-        </div>
-        <div class="rbx-navbar-header">
-            <div data-behavior="nav-notification" class="rbx-nav-collapse" onselectstart="return false;">
-                <div class="rbx-nav-notification hide rbx-font-xs" title="0"></div>
-            </div>
-            <div class="navbar-header">
-                <a class="navbar-brand" href="index.html"><span class="logo"></span></a>
-            </div>
-              <div>
-                 <input class="form-control rbx-input-field" type="text" placeholder="Search" style="width: 200px;" maxlength="120">
-                    <button type="button" class="rbx-input-group-btn" style="background-image: url(img/search_icon.png); background-repeat: no-repeat; height: 25px; transform: translate(-35px, 2.5px); border: hidden;"></button>
-    </div>
-    
-</div>
-</div>
+</head>
+<body><script type="text/javascript" src="stdinc.js"></script>
 <div style="padding-left: 50px;" id="mainpage">
     <padding></padding>
     <h1 id="hometext">Welcome, {User}!</h1>
@@ -57,24 +25,7 @@
         
     </div>
 </div>
-<div id="nav" style="display: none; z-index: 1000; position: fixed; top: 40px; left: 0;">
-        <nav>
-            <a href="/">
-            <button class="navbarbtn">Home</button>
-            </a>
-            <textarea class="navbarbtn" style="padding: 3px; width: 96%; resize: none;" id="userid" placeholder="put your roblox userid here"></textarea>
-            <button class="navbarbtn" onclick="saveid()">Save userid</button>
-        </nav>
-    </div><script type="text/javascript">
-        //const
-        const nav = document.getElementById("nav");
-        const mainpage = document.getElementById("mainpage")
-        const homeText = document.getElementById("hometext");
-        const played = localStorage.getItem("playedgames");
-        const recentlyplayed = document.getElementById("recentlyplayed");
-        //init
-        
-    </script>
+    </div>
     <script type="text/javascript" src="main.js"></script>
     <script>
         if (homeText) {

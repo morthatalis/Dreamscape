@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title id="windowtitle">user - Dreamscape</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="styles.css">
+<link rel="shortcut icon" href="img/icon.ico">
+<script src="https://js.puter.com/v2/"></script> <!--to bypass CORS, without having to care about hosting my own server for CORS bypassing-->
+
+</head>
+<body>
+<script type="text/javascript" src="stdinc.js"></script>
+<div style="padding-right: 30px; padding-top: 50px; display: flex; justify-content: center;align-items: center; flex-direction: column;" id="mainpage">
+    <div style="width: 750px; height: 120px; background-color: #1f033f;">
+    
+    
+        <div style="background-color:#1f033f; padding:10px; display:flex;" width="150px" id="gamepagecore">
+            <img src="/img/icon.ico" style="height: 100px; width: 100px; background-color: white !important; border-radius: 100% !important; border-color: transparent !important; " id="gamecoreimage">
+            <div style="display:align-items; margin-left: 40px;">
+            <h3  id="gamecorename">Name</h3>
+            </div>
+
+        </div>
+
+    </div>
+    <div style="width: 750px; height: flex;">
+    <div style="margin-top: 10px;"><h2 id="desctag" style="text-align: left;">Description</h2>
+    <div style="height: flex; background-color: #1f033f; padding: 10px; padding-top: 1px !important;">
+         
+        <p id="gamecoredescription"></p>
+        
+    </div>
+    <div style=" height: flex; background-color: #1f033f; margin-top:10px;">
+           <p id="playingptag" style=" padding: 10px; padding-left:5px; padding-bottom: 20px;">0</p>
+    </div>
+    </div>
+    </div>
+</div>
+    <script type="text/javascript" src="main.js"></script>
+    <script> 
+
+        function shrinknumber(num, decimals = 2) {
+  if (num === null || num === undefined) return '0';
+  const suffixes = ['', 'K', 'M', 'B', 'T'];
+  const absNum = Math.abs(num);
+  let tier = 0;
+
+  while (absNum >= 1000 ** (tier + 1) && tier < suffixes.length - 1) {
+    tier++;
+  }
+
+  const scaled = num / 1000 ** tier;
+  const rounded = scaled.toFixed(decimals);
+  return `${rounded.replace(/\.0+$/, '')}${suffixes[tier]}`;
+}
+        //vars//
+        const urlParams = new URLSearchParams(window.location.search); 
+        const id = urlParams.get("id");
+        var cachedname = "";
+        const cacheddescription = sessionStorage.getItem("gamecoredescription");
+        const namestring = document.getElementById("gamecorename");
+        const image = document.getElementById("gamecoreimage");
+        const description = document.getElementById("gamecoredescription");
+        const desctag = document.getElementById("desctag");
+        const windowtitle = document.getElementById("windowtitle");
+        const playingtag = document.getElementById("playingptag");
+        //init//
+        if (cachedname && cacheddescription) {
+            windowtitle.innerHTML = cachedname  + " - Dreamscape";
+            namestring.innerHTML = "(Cached) " + cachedname;
+            description.innerHTML = cacheddescription;
+            desctag.innerHTML = "(Cached) Description";
+            image.src = sessionStorage.getItem("thumbnailurl");
+            cachedname = sessionStorage.getItem("gamecorename");
+        }
+        //.substring(0,10)
+        //https://thumbnails.roblox.com/v1/users/headshot?userIds={USER_ID}&size=180x180&format=Png&isCircular=true
+        //init fetch page//
+        puter.net.fetch(`https://users.roblox.com/v1/users/${id}`)
+        .then(response => response.json())
+        .then(data => {
+            sessionStorage.setItem("gamecorename", data.displayName);
+            sessionStorage.setItem("gamecoredescription", data.description);
+            if (data.name) {
+                windowtitle.innerHTML = data.name + " - Dreamscape";
+                desctag.innerHTML = "Description"
+                namestring.innerHTML = data.name;
+                description.innerHTML = data.description;
+                cachedname = data.name;
+            sessionStorage.setItem("gamecorename", data.name);
+            sessionStorage.setItem("gamecoredescription", data.description);
+            playingtag.innerHTML = "Join date: " + data.created.substring(0,10);
+            } else {
+            alert("bruh error retry loading the website after like 1 minute or something idk");
+            console.error("No data found for this ID");
+            }
+        puter.net.fetch(`https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${id}&size=180x180&format=Png&isCircular=true`)
+        .then(response => response.json())
+        .then(data => {
+            //const getParent = data => Array.isArray(data.data) ? data.data[0] : data;
+            console.log(data );
+            console.log(data.data[0].imageUrl);
+            sessionStorage.setItem("thumbnailurl", data.data[0].imageUrl);
+            image.src = data.data[0].imageUrl;
+        })
+        })
+    </script>
+</body>
+</html>
+
