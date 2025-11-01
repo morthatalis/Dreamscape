@@ -15,20 +15,26 @@
 <body>
 <script type="text/javascript" src="stdinc.js"></script>
 <div style="padding-right: 30px; padding-top: 50px; display: flex; justify-content: center;align-items: center; flex-direction: column;" id="mainpage">
-    <div style="width: 750px; height: 120px; background-color: #1f033f;">
+    <div style="width: 750px; height: flex; background-color: #1f033f;">
     
     
-        <div style="background-color:#1f033f; padding:10px; display:flex;" width="150px" id="gamepagecore">
-            <img src="/img/icon.ico" style="height: 100px; width: 100px; background-color: white !important; border-radius: 100% !important; border-color: transparent !important; " id="gamecoreimage">
+        <div style="background-color:#1f033f; padding:5px; display:flex;" width="150px" id="gamepagecore">
+            <div style="size: flex; padding-top: 15px; padding-left: 15px;"><img src="/img/icon.ico" style="height: 120px; width: 120px; background-color: white !important; border-radius: 100% !important; border-color: transparent !important;" id="gamecoreimage"></div>
+            
             <div style="display:align-items; margin-left: 40px;">
-            <h3  id="gamecorename">Name</h3>
+                <p class="h3" style="padding-top: 0px;" id="gamecorename">Name</p>
+            <div style="display:grid; grid-auto-flow: column; overflow-x:auto; gap: 10px;">
+    <div> <center><p>Friends</p> <p id="friends">9999</p></center></div>
+    <div> <center><p>Followers</p> <p id="followers">9999</p></center></div>
+    <div> <center><p>Following</p> <p id="following">9999</p></center></div>
+</div>
             </div>
 
         </div>
 
     </div>
     <div style="width: 750px; height: flex;">
-    <div style="margin-top: 10px;"><h2 id="desctag" style="text-align: left;">Description</h2>
+    <div style="margin-top: 10px;"><p id="desctag" class="h2" style="text-align: left;">Description</p>
     <div style="height: flex; background-color: #1f033f; padding: 10px; padding-top: 1px !important;">
          
         <p id="gamecoredescription"></p>
@@ -60,6 +66,7 @@
         //vars//
         const urlParams = new URLSearchParams(window.location.search); 
         const id = urlParams.get("id");
+        const userId = id
         var cachedname = "";
         const cacheddescription = sessionStorage.getItem("gamecoredescription");
         const namestring = document.getElementById("gamecorename");
@@ -68,6 +75,9 @@
         const desctag = document.getElementById("desctag");
         const windowtitle = document.getElementById("windowtitle");
         const playingtag = document.getElementById("playingptag");
+        const friendstag = document.getElementById("friends");
+        const followingtag = document.getElementById("following");
+        const followerstag = document.getElementById("followers");
         //init//
         if (cachedname && cacheddescription) {
             windowtitle.innerHTML = cachedname  + " - Dreamscape";
@@ -106,8 +116,24 @@
             console.log(data.data[0].imageUrl);
             sessionStorage.setItem("thumbnailurl", data.data[0].imageUrl);
             image.src = data.data[0].imageUrl;
+            //init fetch page//
+        puter.net.fetch(`https://friends.roblox.com/v1/users/${userId}/friends/count`)
+        .then(response => response.json())
+        .then(data => {
+                friendstag.innerHTML = data.count
+                puter.net.fetch(`https://friends.roblox.com/v1/users/${userId}/followers/count`)
+                .then(response => response.json())
+                .then(data => {
+                    followerstag.innerHTML = data.count
+                    puter.net.fetch(`https://friends.roblox.com/v1/users/${userId}/followings/count`)
+                .then(response => response.json())
+                .then(data => {
+                    followingtag.innerHTML = data.count
+                })
+                })
+            })
         })
-        })
+    })
     </script>
 </body>
 </html>
