@@ -42,6 +42,7 @@ const incstr = `
             <button class="navbarbtn" onclick="gotoprofile()">Profile</button>
             <textarea class="navbarbtn" style="padding: 3px; width: 96%; resize: none;" id="userid" placeholder="put your roblox userid here"></textarea>
             <button class="navbarbtn" onclick="saveid()">Save userid</button>
+                        <textarea class="navbarbtn" style="padding: 3px; width: 96%; resize: none; cursor:auto;" disabled placeholder="Dreamscape (NOT ROBLOX)\nVersion: 0.4.0"></textarea>
         </nav>
     </div>
 `
