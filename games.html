@@ -9,7 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="styles.css">
 <link rel="shortcut icon" href="img/icon.ico">
-<script src="https://js.puter.com/v2/"></script> <!--to bypass CORS, without having to care about hosting my own server for CORS bypassing-->
+<!--<script src="https://js.puter.com/v2/"></script> to bypass CORS, without having to care about hosting my own server for CORS bypassing-->
 
 </head>
 <body>
@@ -39,7 +39,7 @@
             <h4>name</h4>
         </div>*/
         trending.innerHTML = sessionStorage.getItem("trendinghtml")
-        puter.net.fetch("https://apis.roblox.com/explore-api/v1/get-sort-content?sessionId=your-generated-uuid&sortId=top-trending")
+        fetch("https://cors-anywhere-72ib.onrender.com/https://apis.roblox.com/explore-api/v1/get-sort-content?sessionId=your-generated-uuid&sortId=top-trending")
   .then(response => response.json())
   .then(async data => {
     if (data.games && Array.isArray(data.games)) {
@@ -49,7 +49,7 @@
 
       const thumbnails = await Promise.all(
         gamesToShow.map(game =>
-          puter.net.fetch(`https://thumbnails.roblox.com/v1/places/gameicons?placeIds=${game.rootPlaceId}&size=512x512&format=Png&isCircular=false`)
+          fetch(`https://cors-anywhere-72ib.onrender.com/https://thumbnails.roblox.com/v1/places/gameicons?placeIds=${game.rootPlaceId}&size=512x512&format=Png&isCircular=false`)
             .then(res => res.json())
             .then(iconData => iconData.data[0]?.imageUrl || "/img/icon.ico") // fallback if missing
             .catch(() => {console.log("no fallback for error but use cached"); change == false}) // fallback if error
@@ -70,7 +70,7 @@
       sessionStorage.setItem("trendinghtml", html);
       //observeThumbnails(trending);
   }
-      puter.net.fetch("https://apis.roblox.com/explore-api/v1/get-sort-content?sessionId=your-generated-uuid&sortId=top-playing-now")
+      fetch("https://cors-anywhere-72ib.onrender.com/https://apis.roblox.com/explore-api/v1/get-sort-content?sessionId=your-generated-uuid&sortId=top-playing-now")
   .then(response => response.json())
   .then(async data => {
     if (data.games && Array.isArray(data.games)) {
@@ -80,7 +80,7 @@
 
       const thumbnails = await Promise.all(
         gamesToShow.map(game =>
-          puter.net.fetch(`https://thumbnails.roblox.com/v1/places/gameicons?placeIds=${game.rootPlaceId}&size=512x512&format=Png&isCircular=false`)
+          fetch(`https://cors-anywhere-72ib.onrender.com/https://thumbnails.roblox.com/v1/places/gameicons?placeIds=${game.rootPlaceId}&size=512x512&format=Png&isCircular=false`)
             .then(res => res.json())
             .then(iconData => iconData.data[0]?.imageUrl || "/img/icon.ico") // fallback if missing
             .catch(() => { console.log("fallback because error"); a = false;}) // fallback if error

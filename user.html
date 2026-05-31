@@ -9,7 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="styles.css">
 <link rel="shortcut icon" href="img/icon.ico">
-<script src="https://js.puter.com/v2/"></script> <!--to bypass CORS, without having to care about hosting my own server for CORS bypassing-->
+ <!--<script src="https://js.puter.com/v2/"></script>to bypass CORS, without having to care about hosting my own server for CORS bypassing-->
 
 </head>
 <body>
@@ -90,7 +90,7 @@
         //.substring(0,10)
         //https://thumbnails.roblox.com/v1/users/headshot?userIds={USER_ID}&size=180x180&format=Png&isCircular=true
         //init fetch page//
-        puter.net.fetch(`https://users.roblox.com/v1/users/${id}`)
+         fetch(`https://cors-anywhere-72ib.onrender.com/https://users.roblox.com/v1/users/${id}`)
         .then(response => response.json())
         .then(data => {
             sessionStorage.setItem("gamecorename", data.displayName);
@@ -108,7 +108,7 @@
             alert("bruh error retry loading the website after like 1 minute or something idk");
             console.error("No data found for this ID");
             }
-        puter.net.fetch(`https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${id}&size=180x180&format=Png&isCircular=true`)
+        fetch(`https://cors-anywhere-72ib.onrender.com/https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${id}&size=180x180&format=Png&isCircular=true`)
         .then(response => response.json())
         .then(data => {
             //const getParent = data => Array.isArray(data.data) ? data.data[0] : data;
@@ -117,7 +117,7 @@
             sessionStorage.setItem("thumbnailurl", data.data[0].imageUrl);
             image.src = data.data[0].imageUrl;
             //init fetch page//
-        puter.net.fetch(`https://friends.roblox.com/v1/users/${userId}/friends/count`)
+        fetch(`https://cors-anywhere-72ib.onrender.com/https://friends.roblox.com/v1/users/${userId}/friends/count`)
         .then(response => response.json())
         .then(data => {
                 friendstag.innerHTML = data.count
@@ -125,7 +125,7 @@
                 .then(response => response.json())
                 .then(data => {
                     followerstag.innerHTML = data.count
-                    puter.net.fetch(`https://friends.roblox.com/v1/users/${userId}/followings/count`)
+                    fetch(`https://cors-anywhere-72ib.onrender.com/https://friends.roblox.com/v1/users/${userId}/followings/count`)
                 .then(response => response.json())
                 .then(data => {
                     followingtag.innerHTML = data.count

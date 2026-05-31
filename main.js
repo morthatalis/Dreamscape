@@ -26,12 +26,14 @@
         if (!userid || isNaN(Number(userid)) || Number(userid) < 0) {
         window.alert("Please put your Roblox userid in the sidenav to actually use this site");
         } else {
-            puter.net.fetch("https://users.roblox.com/v1/users/" + userid)
+            fetch("https://cors-anywhere-72ib.onrender.com/https://users.roblox.com/v1/users/" + userid)
             .then(response => response.json())
             .then(data => {
-            sessionStorage.setItem("displayname", data.displayName)
+            sessionStorage.setItem("displayname", data.displayName);
+            localStorage.setItem("savedname", data.displayName);
             const homeText = document.getElementById("hometext");
             displayname = data.displayName;
+            console.log("fetched"+ data.displayName);
         })
         .catch(error => console.error("Error fetching data:", error));
         }
