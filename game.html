@@ -21,7 +21,8 @@
         <div style="background-color:#1f033f; padding: 10px; display:flex;" width="1250px" id="gamepagecore">
             <img src="/img/icon.ico" style="width: calc(60%); " id="gamecoreimage">
             <div style="display:align-items; margin-left: 40px;">
-            <h3  id="gamecorename">Name</h3>
+            <h3  id="gamecorename">Loading</h3>
+            <p onclick="opencreator()" id="creatorname">By: Loading</p>
             <button onclick="joinplace()" style="width: 200px !important; height: 50px; font-size: 16px; text-align: center; !important; padding: 0px !important; margin-top: 60px; background-color: #00bf5a !important;border-color: #00bf5a;" class="navbarbtn"><p style="color: white;">Play</p></button>
             </div>
 
@@ -31,10 +32,10 @@
     <div style="width: 650px; height: flex; background-color: #360f5a; margin-top: 10px; ">
         <h2 id="desctag">Description</h2>
         <div style="background-color: #1f033f; margin-top: 5px; padding: 10px;">
-        <p id="gamecoredescription"></p>
+        <p id="gamecoredescription">Loading</p>
         </div>
         <div style="margin-top: 10px; background-color: #1f033f;">
-        <p id="playingptag" style=" padding: 10px; padding-left:5px;">as</p>
+        <p id="playingptag" style=" padding: 10px; padding-left:5px;">Loading</p>
         </div>
     </div>
     
@@ -69,6 +70,7 @@
         const playingtag = document.getElementById("playingptag");
         let universeid = sessionStorage.getItem("universeid");
         let c
+        const creatornametag = document.getElementById("creatorname");
         //init//
         if (cachedname && cacheddescription) {
             windowtitle.innerHTML = cachedname  + " - Dreamscape";
@@ -100,9 +102,13 @@
                 namestring.innerHTML = game.name;
                 description.innerHTML = game.description;
                 cachedname = game.name;
+                creatornametag.innerHTML = "By: " + game.creator.name + " (" + game.creator.type + ")";
             sessionStorage.setItem("gamecorename", game.name);
             sessionStorage.setItem("gamecoredescription", game.description);
             playingtag.innerHTML = "Playing: " + shrinknumber(game.playing) + " Visits: " + shrinknumber(game.visits) + " Favorited: " + shrinknumber(game.favoritedCount)
+            sessionStorage.setItem("gamecreatorname", game.creator.name);
+            sessionStorage.setItem("gamecreatorid", game.creator.id);
+            sessionStorage.setItem("gamecreatortype", game.creator.type);
             }
             fetch(`https://cors-anywhere-72ib.onrender.com/https://thumbnails.roblox.com/v1/games/multiget/thumbnails?universeIds=${universeid}&size=480x270&format=Png&isCircular=false`)
         .then(response => response.json())
@@ -162,6 +168,16 @@ fetch(`https://cors-anywhere-72ib.onrender.com/https://thumbnails.roblox.com/v1/
 
 
             window.open("roblox://placeId=" + placeid);
+        }
+        function opencreator() {
+            const creatorid = sessionStorage.getItem("gamecreatorid");
+            const creatortype = sessionStorage.getItem("gamecreatortype");
+            if (creatortype == "User") {
+                window.location = "user.html?id=" + creatorid;
+
+            } else {
+                alert("Creator is a Group. Groups aren't implemented yet.");
+            }
         }
     </script>
 </body>

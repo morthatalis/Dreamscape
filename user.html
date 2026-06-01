@@ -121,7 +121,7 @@
         .then(response => response.json())
         .then(data => {
                 friendstag.innerHTML = data.count
-                puter.net.fetch(`https://friends.roblox.com/v1/users/${userId}/followers/count`)
+                fetch(`https://cors-anywhere-72ib.onrender.com/https://friends.roblox.com/v1/users/${userId}/followers/count`)
                 .then(response => response.json())
                 .then(data => {
                     followerstag.innerHTML = data.count
