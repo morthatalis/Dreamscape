@@ -10,7 +10,7 @@ UserID saving, Home page
 Searching, Profiles. (in the future Friends list, on homepage)
 # How to use localhost/host this
 install nodejs (search on yt or google it)  
-clone this repo (either using github desktop,  or doing git clone https://github.com/morthatalis/Dreamscape/ in your terminal)
+clone this repo (either using github desktop,  or by downloading the zip on this page)
 and when done, use the provided runserver.cmd file
 # There's no need for a server though.
 There's no need for to host this,  
@@ -18,3 +18,6 @@ since this all works as html files
 (you need all of these files to work, since main.js, stdinc.js and styles.css is what every page's cores)  
 if you dont wanna host this, just install github desktop and then clone this (not fork)  
 have fun :D
+# cool stuff about this
+it uses my own proxy server (to bypass cors)  
+the webpage on render is just static because it's just html files.
