@@ -28,9 +28,13 @@
     </div>
     <script type="text/javascript" src="main.js"></script>
     <script>
+        setTimeout(function() {const savedname = localStorage.getItem("savedname");
+        //const homeText = document.getElementById("hometext");
+        
         if (homeText) {
-            homeText.innerHTML = "Welcome, " + displayname + "!";
-        }
+            homeText.innerHTML = "Welcome, " + savedname + "!";
+        }}, 500);
+        
 
         
         // turn string into an array of numbers

@@ -8,6 +8,8 @@
         const played = localStorage.getItem("playedgames");
         const recentlyplayed = document.getElementById("recentlyplayed");
         const searchbar = document.getElementById("searchbar");
+        const overlay = document.getElementById("overlay");
+        const inputuserid = document.getElementById("inputuserid");
         if (navtoggle == "false") {
                 nav.style.display = "none";
                 mainpage.style.transform = "translateX(0px)";
@@ -21,19 +23,58 @@
                 //transform: translateX();
                 
         }
+         function opensettings() {
+      overlay.classList.add("active");
+    }
+    function closesettings() {
+        if (!(!userid || isNaN(Number(userid)) || Number(userid) < 0)) { 
+         overlay.classList.remove("active");
+        } else {
+            window.alert("bro put in your username lil bro");
+        }
+    }
+    function savesettings() {
+        //localStorage.setItem("userid", inputuserid.value);
+        fetch("https://cors-anywhere-72ib.onrender.com/https://users.roblox.com/v1/usernames/users", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                usernames: [inputuserid.value],
+                excludeBannedUsers: false
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data.data[0].id); 
+            localStorage.setItem("userid", data.data[0].id);
+            localStorage.setItem("Username", inputuserid.value);
+            window.location.reload();
+        })
 
+
+    }
+        
 
         if (!userid || isNaN(Number(userid)) || Number(userid) < 0) {
-        window.alert("Please put your Roblox userid in the sidenav to actually use this site");
+        opensettings();
+        
+        window.alert("Please input a roblox userid (either yours or a random one) to use this website");
+        
         } else {
+            
             fetch("https://cors-anywhere-72ib.onrender.com/https://users.roblox.com/v1/users/" + userid)
             .then(response => response.json())
             .then(data => {
             sessionStorage.setItem("displayname", data.displayName);
             localStorage.setItem("savedname", data.displayName);
+
             const homeText = document.getElementById("hometext");
+            //homeText.InnerText = data.displayName;
             displayname = data.displayName;
-            console.log("fetched"+ data.displayName);
+            inputuserid.value = localStorage.getItem("Username");
+            //console.log("fetched"+ data.displayName);
         })
         .catch(error => console.error("Error fetching data:", error));
         }
@@ -56,7 +97,8 @@
             }
         }
         function saveid() {
-            localStorage.setItem("userid", document.getElementById("userid").value);
+            //localStorage.setItem("userid", );
+            //document.getElementById("username")
             location.reload()
         }
         function gotoprofile() {
@@ -67,3 +109,13 @@
         function search() {
             window.location = "search.html?q=" + searchbar.value + "&type=games"
         }
+        
+
+
+// Close popup when clicking outside
+    overlay.addEventListener("click", function(e) {
+      if (e.target === overlay) {
+        closesettings();
+      }
+    });
+    

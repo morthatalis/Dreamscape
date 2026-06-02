@@ -33,18 +33,24 @@
         let popular = document.getElementById('popular');
         //let topearning = document.getElementById('topearning');
         popular.innerHTML = sessionStorage.getItem("popularhtml");
+        const lastupdate = Number(sessionStorage.getItem("lastupdate"));
         //topearning.innerHTML = sessionStorage.getItem("topearninghtml");
         /*<div class="gameblock">
             <img src="image" width="80px" height="80px">
             <h4>name</h4>
         </div>*/
         trending.innerHTML = sessionStorage.getItem("trendinghtml")
+        let unixSeconds = Math.floor(Date.now() / 1000);
+        if ((unixSeconds - lastupdate ) > 120 || lastupdate == 0) {
+          
+      let unixSeconds = Math.floor(Date.now() / 1000);
+      sessionStorage.setItem("lastupdate", unixSeconds.toString());
         fetch("https://cors-anywhere-72ib.onrender.com/https://apis.roblox.com/explore-api/v1/get-sort-content?sessionId=your-generated-uuid&sortId=top-trending")
   .then(response => response.json())
   .then(async data => {
     if (data.games && Array.isArray(data.games)) {
-        let change = true
-      const limit = 30;
+        let a = true
+      const limit = 25;
       const gamesToShow = data.games.slice(0, limit);
 
       const thumbnails = await Promise.all(
@@ -52,10 +58,10 @@
           fetch(`https://cors-anywhere-72ib.onrender.com/https://thumbnails.roblox.com/v1/places/gameicons?placeIds=${game.rootPlaceId}&size=512x512&format=Png&isCircular=false`)
             .then(res => res.json())
             .then(iconData => iconData.data[0]?.imageUrl || "/img/icon.ico") // fallback if missing
-            .catch(() => {console.log("no fallback for error but use cached"); change == false}) // fallback if error
+            .catch(() => { console.log("fallback because error"); a = false;}) // fallback if error
         )
       );
-      if (change == true) {
+      if (a == true) {
       const html = gamesToShow.map((game, i) => `
         <a href="game.html?placeid=${game.rootPlaceId}">
           <div class="gameblock">
@@ -75,7 +81,7 @@
   .then(async data => {
     if (data.games && Array.isArray(data.games)) {
         let a = true
-      const limit = 30;
+      const limit = 25;
       const gamesToShow = data.games.slice(0, limit);
 
       const thumbnails = await Promise.all(
@@ -99,6 +105,7 @@
       // Set innerHTML once
       popular.innerHTML = html;
       sessionStorage.setItem("popularhtml", html);
+      console.log(unixSeconds.toString());
       //observeThumbnails(popular);
       }
       
@@ -110,6 +117,7 @@
 
   })
   .catch(err => console.error("Error loading popular games:", err));
+} else {console.log("Fallback in order to not get ratelimited. " + (120-(unixSeconds - lastupdate )) + " seconds left until allowed to fetch again.")};
       </script>
 </body>
 </html>

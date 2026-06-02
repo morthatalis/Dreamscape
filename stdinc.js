@@ -40,11 +40,37 @@ const incstr = `
             <button class="navbarbtn">Home</button>
             </a>
             <button class="navbarbtn" onclick="gotoprofile()">Profile</button>
-            <textarea class="navbarbtn" style="padding: 3px; width: 96%; resize: none;" id="userid" placeholder="put your roblox userid here"></textarea>
-            <button class="navbarbtn" onclick="saveid()">Save userid</button>
-                        <textarea class="navbarbtn" style="padding: 3px; width: 96%; resize: none; cursor:auto;" disabled placeholder="Dreamscape (NOT ROBLOX)\nVersion: 0.4.0"></textarea>
+            <button class="navbarbtn" onclick="opensettings()">Settings</button>
+            <textarea class="navbarbtn" style="padding: 3px; width: 96%; resize: none; cursor:auto;" disabled placeholder="Dreamscape (NOT ROBLOX)\nVersion: 0.6.0"></textarea>
         </nav>
+</div>
+
+    <div class="overlay" id="overlay">
+
+    <!-- Popup -->
+    <div class="popup">
+
+      <div class="popup-header">
+        <h2 id="settingsheader">Settings</h2>
+
+        <!-- Close Button -->
+        <button class="close-btn" onclick="closesettings()">
+          &times;
+        </button>
+      </div>
+
+      <div class="setting">
+        <label>Roblox Username</label>
+        <input type="text" id="inputuserid" placeholder="Enter your roblox Username">
+      </div>
+
+
+      <button class="save-btn" onclick="savesettings()">
+        Save Settings
+      </button>
+
     </div>
+  </div>
 `
 document.body.insertAdjacentHTML('afterbegin',incstr);
 console.log("CURRENT HTML INCLUDE", incstr);
