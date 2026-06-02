@@ -59,8 +59,8 @@
 
         if (!userid || isNaN(Number(userid)) || Number(userid) < 0) {
         opensettings();
+        setTimeout(function() {window.alert("A Roblox username is required in order to use this website.");}, 100);
         
-        window.alert("Please input a roblox userid (either yours or a random one) to use this website");
         
         } else {
             
