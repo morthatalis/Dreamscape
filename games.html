@@ -45,7 +45,7 @@
           
       let unixSeconds = Math.floor(Date.now() / 1000);
       sessionStorage.setItem("lastupdate", unixSeconds.toString());
-        fetch("https://cors-anywhere-72ib.onrender.com/https://apis.roblox.com/explore-api/v1/get-sort-content?sessionId=your-generated-uuid&sortId=top-trending")
+        pfetch("https://apis.roblox.com/explore-api/v1/get-sort-content?sessionId=your-generated-uuid&sortId=top-trending")
   .then(response => response.json())
   .then(async data => {
     if (data.games && Array.isArray(data.games)) {
@@ -55,7 +55,7 @@
 
       const thumbnails = await Promise.all(
         gamesToShow.map(game =>
-          fetch(`https://cors-anywhere-72ib.onrender.com/https://thumbnails.roblox.com/v1/places/gameicons?placeIds=${game.rootPlaceId}&size=512x512&format=Png&isCircular=false`)
+          pfetch(`https://thumbnails.roblox.com/v1/places/gameicons?placeIds=${game.rootPlaceId}&size=512x512&format=Png&isCircular=false`)
             .then(res => res.json())
             .then(iconData => iconData.data[0]?.imageUrl || "/img/icon.ico") // fallback if missing
             .catch(() => { console.log("fallback because error"); a = false;}) // fallback if error
@@ -86,7 +86,7 @@
 
       const thumbnails = await Promise.all(
         gamesToShow.map(game =>
-          fetch(`https://cors-anywhere-72ib.onrender.com/https://thumbnails.roblox.com/v1/places/gameicons?placeIds=${game.rootPlaceId}&size=512x512&format=Png&isCircular=false`)
+          pfetch(`https://thumbnails.roblox.com/v1/places/gameicons?placeIds=${game.rootPlaceId}&size=512x512&format=Png&isCircular=false`)
             .then(res => res.json())
             .then(iconData => iconData.data[0]?.imageUrl || "/img/icon.ico") // fallback if missing
             .catch(() => { console.log("fallback because error"); a = false;}) // fallback if error

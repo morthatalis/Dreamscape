@@ -10,6 +10,13 @@
         const searchbar = document.getElementById("searchbar");
         const overlay = document.getElementById("overlay");
         const inputuserid = document.getElementById("inputuserid");
+
+        const proxy = "https://cors-anywhere-72ib.onrender.com"
+
+        function pfetch(domain) {
+            return fetch(proxy+"/"+domain)
+        }
+
         if (navtoggle == "false") {
                 nav.style.display = "none";
                 mainpage.style.transform = "translateX(0px)";
@@ -35,7 +42,7 @@
     }
     function savesettings() {
         //localStorage.setItem("userid", inputuserid.value);
-        fetch("https://cors-anywhere-72ib.onrender.com/https://users.roblox.com/v1/usernames/users", {
+        pfetch("https://users.roblox.com/v1/usernames/users", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -64,7 +71,7 @@
         
         } else {
             
-            fetch("https://cors-anywhere-72ib.onrender.com/https://users.roblox.com/v1/users/" + userid)
+            pfetch("https://users.roblox.com/v1/users/" + userid)
             .then(response => response.json())
             .then(data => {
             sessionStorage.setItem("displayname", data.displayName);

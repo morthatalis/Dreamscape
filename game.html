@@ -81,13 +81,13 @@
             cachedname = sessionStorage.getItem("gamecorename");
         }
         //init fetch page//
-        fetch(`https://cors-anywhere-72ib.onrender.com/https://apis.roblox.com/universes/v1/places/${placeid}/universe`)
+        pfetch(`https://apis.roblox.com/universes/v1/places/${placeid}/universe`)
         .then(response => response.json())
         .then(data => {
             universeid = data.universeId;
             sessionStorage.setItem("universeid", data[0]);
             console.log(data.universeId);
-        fetch(`https://cors-anywhere-72ib.onrender.com/https://games.roblox.com/v1/games?universeIds=${universeid}`)
+        pfetch(`https://games.roblox.com/v1/games?universeIds=${universeid}`)
         .then(response => response.json())
         .then(data => {
             //const getParent = data => Array.isArray(data.data) ? data.data[0] : data;
@@ -110,7 +110,7 @@
             sessionStorage.setItem("gamecreatorid", game.creator.id);
             sessionStorage.setItem("gamecreatortype", game.creator.type);
             }
-            fetch(`https://cors-anywhere-72ib.onrender.com/https://thumbnails.roblox.com/v1/games/multiget/thumbnails?universeIds=${universeid}&size=480x270&format=Png&isCircular=false`)
+            pfetch(`https://thumbnails.roblox.com/v1/games/multiget/thumbnails?universeIds=${universeid}&size=480x270&format=Png&isCircular=false`)
         .then(response => response.json())
         .then(data => {
             //const game = Array.isArray(data) ? data[0] : data;
@@ -138,7 +138,7 @@
         function joinplace() {
            console.log(cachedname);
 
-fetch(`https://cors-anywhere-72ib.onrender.com/https://thumbnails.roblox.com/v1/places/gameicons?placeIds=${placeid}&size=512x512&format=Png&isCircular=false`)
+pfetch(`https://thumbnails.roblox.com/v1/places/gameicons?placeIds=${placeid}&size=512x512&format=Png&isCircular=false`)
   .then(res => res.json())
   .then(thumbnailData => {
   const thumb = thumbnailData?.data?.[0]?.imageUrl || "/img/icon.ico";

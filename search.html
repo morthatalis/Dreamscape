@@ -26,7 +26,7 @@
     const searchtype = urlParams.get("type");
     const grid = document.getElementById("grid-container");
     if (searchtype == "games") {
- fetch(`https://cors-anywhere-72ib.onrender.com/https://apis.roblox.com/search-api/omni-search?searchQuery=${query}&sessionId=SESSION_ID`)
+ pfetch(`https://apis.roblox.com/search-api/omni-search?searchQuery=${query}&sessionId=SESSION_ID`)
   .then(response => response.json())
   .then(async data => {
     if (data.searchResults && Array.isArray(data.searchResults)) {
@@ -36,7 +36,7 @@
 
       const thumbnails = await Promise.all(
         gamesToShow.map(game =>
-          fetch(`https://cors-anywhere-72ib.onrender.com/https://thumbnails.roblox.com/v1/places/gameicons?placeIds=${game.contents[0].rootPlaceId}&size=512x512&format=Png&isCircular=false`)
+          pfetch(`https://thumbnails.roblox.com/v1/places/gameicons?placeIds=${game.contents[0].rootPlaceId}&size=512x512&format=Png&isCircular=false`)
             .then(res => res.json())
             .then(iconData => iconData.data[0]?.imageUrl || "/img/icon.ico") // fallback if missing
             .catch(() => { console.log("fallback because error"); a = false;}) // fallback if error
