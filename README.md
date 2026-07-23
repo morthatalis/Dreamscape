@@ -11,7 +11,9 @@ Searching, Profiles. (in the future Friends list, on homepage)
 # How to use localhost/host this
 install nodejs (search on yt or google it)  
 clone this repo (either using github desktop,  or by downloading the zip on this page)
-and when done, use the provided runserver.cmd file
+```npm init -y```  
+```npm install express```  
+```node server.js```  
 # There's no need for a server though.
 There's no need for to host this,  
 since this all works as html files  
