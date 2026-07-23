@@ -10,7 +10,7 @@ UserID saving, Home page
 Searching, Profiles. (in the future Friends list, on homepage)
 # How to use localhost/host this
 install nodejs (search on yt or google it)  
-clone this repo (either using github desktop,  or by downloading the zip on this page)
+clone this repo (either using github desktop,  or by downloading the zip on this page)  
 ```npm init -y```  
 ```npm install express```  
 ```node server.js```  
